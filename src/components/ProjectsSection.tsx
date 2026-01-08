@@ -58,12 +58,12 @@ const projects: Project[] = [
   },
   {
     id: "7",
-    title: "AI Chat Assistant",
+    title: "CriativeArt - Gestão de Brindes",
     description:
-      "Assistente de chat inteligente com integração de múltiplos modelos de IA, histórico de conversas e personalização de respostas. Interface moderna e responsiva.",
-    url: "https://anthropic.com",
-    technologies: ["Claude API", "React", "Tailwind CSS", "Supabase"],
-    category: "IA",
+      "Sistema de gestão para empresa de brindes personalizados. Controle de produção, estoque e pedidos com dashboard interativo.",
+    url: "https://criative-art-management-system.vercel.app/#/",
+    technologies: ["React", "Tailwind CSS", "Recharts", "PWA"],
+    category: "Gestão",
   },
   {
     id: "8",
