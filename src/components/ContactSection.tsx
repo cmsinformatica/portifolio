@@ -1,11 +1,20 @@
 import { motion } from "framer-motion";
 import { Mail, Github, Linkedin, Send } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: Mail, href: "mailto:contato@email.com", label: "Email" },
+  { icon: Github, href: "https://github.com/cmsinformatica", label: "GitHub" },
+  {
+    icon: Linkedin,
+    href: "https://www.linkedin.com/in/cmsinformatica/",
+    label: "LinkedIn",
+  },
+  {
+    icon: Mail,
+    href: "mailto:cristiano@cristianomartins.net",
+    label: "Email",
+  },
 ];
 
 export function ContactSection() {
@@ -17,8 +26,22 @@ export function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log(formData);
+
+    if (!formData.name || !formData.email || !formData.message) {
+      toast.error("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    const subject = `Novo contato de: ${formData.name}`;
+    const body = `Nome: ${formData.name}\nEmail: ${formData.email}\n\nMensagem:\n${formData.message}`;
+    const mailtoLink = `mailto:cristiano@cristianomartins.net?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailtoLink;
+    toast.success("Abrindo cliente de email...");
+
+    setFormData({ name: "", email: "", message: "" });
   };
 
   return (
