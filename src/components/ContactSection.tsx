@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, Send } from "lucide-react";
+import { Mail, Github, Linkedin, Send, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -23,8 +23,9 @@ export function ContactSection() {
     email: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.message) {
@@ -32,16 +33,41 @@ export function ContactSection() {
       return;
     }
 
-    const subject = `Novo contato de: ${formData.name}`;
-    const body = `Nome: ${formData.name}\nEmail: ${formData.email}\n\nMensagem:\n${formData.message}`;
-    const mailtoLink = `mailto:cristiano@cristianomartins.net?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
+    setIsSubmitting(true);
 
-    window.location.href = mailtoLink;
-    toast.success("Abrindo cliente de email...");
+    try {
+      const response = await fetch(
+        "https://formsubmit.co/ajax/cristiano@cristianomartins.net",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            _subject: `Novo contato de: ${formData.name}`,
+            _template: "table",
+          }),
+        }
+      );
 
-    setFormData({ name: "", email: "", message: "" });
+      const data = await response.json();
+
+      if (data.success === "true" || response.ok) {
+        toast.success("Mensagem enviada com sucesso!");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        toast.error("Erro ao enviar mensagem. Tente novamente.");
+      }
+    } catch (error) {
+      toast.error("Erro ao enviar mensagem. Tente novamente.");
+      console.error("Erro no envio:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -86,7 +112,8 @@ export function ContactSection() {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-xl glass glow-border bg-transparent focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 rounded-xl glass glow-border bg-transparent focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-50"
                   placeholder="Seu nome"
                 />
               </div>
@@ -98,7 +125,8 @@ export function ContactSection() {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-xl glass glow-border bg-transparent focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-3 rounded-xl glass glow-border bg-transparent focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all disabled:opacity-50"
                   placeholder="seu@email.com"
                 />
               </div>
@@ -110,19 +138,30 @@ export function ContactSection() {
                 onChange={(e) =>
                   setFormData({ ...formData, message: e.target.value })
                 }
+                disabled={isSubmitting}
                 rows={5}
-                className="w-full px-4 py-3 rounded-xl glass glow-border bg-transparent focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
+                className="w-full px-4 py-3 rounded-xl glass glow-border bg-transparent focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none disabled:opacity-50"
                 placeholder="Conte-me sobre seu projeto..."
               />
             </div>
             <motion.button
               type="submit"
+              disabled={isSubmitting}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold flex items-center justify-center gap-2 hover-glow"
+              className="w-full py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold flex items-center justify-center gap-2 hover-glow disabled:opacity-70 disabled:cursor-not-allowed"
             >
-              <Send className="w-4 h-4" />
-              Enviar Mensagem
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Enviando...
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4" />
+                  Enviar Mensagem
+                </>
+              )}
             </motion.button>
           </form>
 

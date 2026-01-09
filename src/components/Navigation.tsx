@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Code2, User, FolderOpen, Mail } from "lucide-react";
+import { Code2, User, FolderOpen, Mail, Terminal } from "lucide-react";
 
 const navItems = [
   { label: "Início", href: "#hero", icon: Code2 },
@@ -25,10 +25,10 @@ export function Navigation() {
             whileHover={{ scale: 1.02 }}
           >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
-              <Code2 className="w-5 h-5 text-primary-foreground" />
+              <Terminal className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="font-semibold text-lg hidden sm:block">
-              Dev<span className="text-gradient">Folio</span>
+              Cristiano <span className="text-gradient">Martins</span>
             </span>
           </motion.a>
 
