@@ -53,8 +53,8 @@ const CookieConsent = () => {
                   </button>
                 </div>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Este site utiliza cookies para melhorar sua experiência de navegação. 
-                  De acordo com a Lei Geral de Proteção de Dados (LGPD), solicitamos seu 
+                  Este site utiliza cookies para melhorar sua experiência de navegação.
+                  De acordo com a Lei Geral de Proteção de Dados (LGPD), solicitamos seu
                   consentimento para armazenar cookies em seu dispositivo.
                 </p>
                 <div className="flex gap-3">
@@ -74,7 +74,7 @@ const CookieConsent = () => {
                 </div>
                 <p className="text-xs text-muted-foreground mt-3 text-center">
                   Saiba mais em nossa{" "}
-                  <a href="#" className="text-accent hover:underline">
+                  <a href="/privacy" className="text-accent hover:underline">
                     Política de Privacidade
                   </a>
                 </p>
