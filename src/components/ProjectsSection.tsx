@@ -67,12 +67,12 @@ const projects: Project[] = [
   },
   {
     id: "8",
-    title: "Cloud Infrastructure Manager",
+    title: "Letra Explosiva",
     description:
-      "Gerenciador de infraestrutura cloud com provisionamento automatizado, controle de custos e gestão de recursos. Suporte multi-cloud AWS, Azure e GCP.",
-    url: "https://netlify.com",
-    technologies: ["Terraform", "React", "AWS SDK", "TypeScript"],
-    category: "Infraestrutura",
+      "Jogo arcade de digitação rápida. Teste seus reflexos digitando as letras antes que caiam. Inclui sistema de pontuação, combos e ranking global.",
+    url: "https://cmsinformatica.github.io/letra_explosiva/",
+    technologies: ["JavaScript", "HTML5", "CSS3", "GitHub Pages"],
+    category: "Game",
   },
 ];
 
